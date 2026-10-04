@@ -1,6 +1,32 @@
 require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 3696:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getDefaultSnapshotDetector = void 0;
+const packageJson = __nccwpck_require__(4147);
+function getProjectVersion() {
+    if (typeof packageJson.version !== 'string' || packageJson.version === '') {
+        throw new Error('Invalid package version in package.json');
+    }
+    return packageJson.version;
+}
+function getDefaultSnapshotDetector() {
+    return {
+        name: 'actions/go-dependency-submission',
+        url: 'https://github.com/actions/go-dependency-submission',
+        version: getProjectVersion()
+    };
+}
+exports.getDefaultSnapshotDetector = getDefaultSnapshotDetector;
+
+
+/***/ }),
+
 /***/ 9283:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -48,6 +74,7 @@ const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const dependency_submission_toolkit_1 = __nccwpck_require__(3415);
 const process_1 = __nccwpck_require__(4077);
+const detector_1 = __nccwpck_require__(3696);
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         const goModPath = path_1.default.normalize(core.getInput('go-mod-path', { required: true }));
@@ -100,11 +127,7 @@ function main() {
         const detectorVersion = core.getInput('detector-version');
         if (detectorName === '' && detectorUrl === '' && detectorVersion === '') {
             // use defaults if none are specified
-            snapshotDetector = {
-                name: 'actions/go-dependency-submission',
-                url: 'https://github.com/actions/go-dependency-submission',
-                version: '0.0.1'
-            };
+            snapshotDetector = (0, detector_1.getDefaultSnapshotDetector)();
         }
         else if (detectorName === '' ||
             detectorUrl === '' ||
@@ -36490,6 +36513,14 @@ class RequestError extends Error {
 }
 
 
+
+/***/ }),
+
+/***/ 4147:
+/***/ ((module) => {
+
+"use strict";
+module.exports = JSON.parse('{"name":"go-dependency-submission","version":"2.0.3","description":"Go Dependency Submission","main":"dist/index.js","engines":{"node":">=24"},"scripts":{"build":"tsc","format":"npx prettier --write \'**/*.ts\'","format-check":"npx prettier --check \'**/*.ts\'","lint":"eslint --fix src/**/*.ts","package":"ncc build --source-map --license licenses.txt","test":"jest --testTimeout=10000","test:watch":"jest --watch src","all":"npm run build && npm run format && npm run lint && npm run package && npm test"},"repository":{"type":"git","url":"git+https://github.com/actions/go-dependency-submission.git"},"keywords":[],"author":"","license":"ISC","bugs":{"url":"https://github.com/actions/go-dependency-submission/issues"},"homepage":"https://github.com/actions/go-dependency-submission#readme","devDependencies":{"@babel/core":"^7.26.10","@babel/preset-env":"^7.26.9","@babel/preset-typescript":"^7.27.0","@types/jest":"^27.5.2","@typescript-eslint/eslint-plugin":"^5.20.0","@typescript-eslint/parser":"^5.20.0","@vercel/ncc":"^0.33.4","babel-jest":"^29.7.0","eslint":"^8.13.0","eslint-config-standard":"^17.0.0","eslint-plugin-import":"^2.26.0","eslint-plugin-jest":"^26.5.3","eslint-plugin-n":"^15.1.0","eslint-plugin-promise":"^6.0.0","prettier":"^3.5.3","ts-jest":"^29.0.0","typescript":"^4.6.4"},"dependencies":{"@actions/core":"^1.11.1","@actions/exec":"^1.1.1","@actions/github":"^6.0.1","@github/dependency-submission-toolkit":"^2.0.5","packageurl-js":"^0.0.6"},"overrides":{"undici":"^6.24.0"}}');
 
 /***/ })
 
